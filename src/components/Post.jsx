@@ -1,48 +1,115 @@
+import { format, formatDistanceToNow, set } from 'date-fns';
+import ptBR from 'date-fns/locale/pt-BR';
+
+
 import styles from './Post.module.css';
 import { Comment } from './Comment';
 import { Avatar } from './Avatar';
+import { enUS } from 'date-fns/locale';
+import { useState } from 'react';
 
-export function Post() {
+
+export function Post({ author, publishedAt, content }) {
+    const [comments, setComments] = useState([
+        'Nice post mate, isnt it?'
+    ])
+
+    const [newCommentText, setNewCommentText] = useState('')
+    
+    const publishedDateFormatted = format(publishedAt, "d 'of' LLLL 'at' HH:mm", {
+        locale: ptBR,
+    })
+
+    const publishedDateRelativeToNow = formatDistanceToNow(publishedAt, {
+        locale: enUS,
+        addSuffix: true
+    })
+
+    function handleCreateNewComment() {
+        event.preventDefault()
+
+        // const newCommentText = event.target.comment.value;
+
+        setComments([...comments, newCommentText ]);
+        setNewCommentText('');
+
+        // event.target.comment.value = '';
+
+    }
+
+    function handleNewCommentChange() {
+        event.target.setCustomValidity('');
+        setNewCommentText(event.target.value);
+    }
+    
+    function handleNewCommmentInvalid(){
+        event.target.setCustomValidity('This field is required!');
+    }
+
+    function deleteComment(commentToDelete){
+        const commentsWithoutDeleteOne = comments.filter(comment => {
+            return comment !== commentToDelete; 
+        })
+
+        setComments(commentsWithoutDeleteOne);
+    }
+
+    const isNewCommentEmpty = newCommentText.length === 0;
+
     return(
         <article className={styles.post}>
             <header>
                 <div className={styles.author}>
-                    <Avatar src="https://github.com/evandrolugli.png" />
+                    <Avatar src={author.avatarUrl} />
                     <div className={styles.authorInfo}>
-                        <strong>Evandro Lugli</strong>
-                        <span>Web Developer</span>
+                        <strong>{author.name}</strong>
+                        <span>{author.role}</span>
                     </div>
                 </div>
 
-                <time title="Nov 12th at 17:50" dateTime="2023-11-12 17:50:00">Published 1 hour ago</time>
+                <time title={publishedDateFormatted} dateTime={publishedAt.toISOString()}>
+                    {publishedDateRelativeToNow}
+                </time>
             </header>
 
             <div className={styles.content}>
-                <p>Hi everyone,</p>
-                <p>I have just to realized a new project in my profile. It is a NWL project in AI.</p>
-                <p><a href="#">evandrolugli/nwl-ai</a></p>
-                <p>
-                    <a href="#">#newproject</a>{' '}
-                    <a href="#">#nlw</a>{' '}
-                    <a href="#">#ai</a>
-                </p>
+                {content.map(line => {
+                    if (line.type === 'paragraph'){
+                        return <p key={line.content} >{line.content}</p>;
+                    } else if (line.type === 'link') {
+                        return <p key={line.content}><a href="#">{line.content}</a></p>;
+                    }
+                })}
             </div>
 
-            <form className={styles.commentForm}>
+            <form onSubmit={handleCreateNewComment} className={styles.commentForm}>
                 <strong>Type your comment</strong>
                 <textarea
+                    name="comment"
                     placeholder="Type your comment"
+                    value={newCommentText}
+                    onChange={handleNewCommentChange}
+                    onInvalid={handleNewCommmentInvalid}
+                    required
                 />
 
                 <footer>
-                    <button type="submit">Post</button>
+                    <button type="submit" disabled={isNewCommentEmpty}>
+                        Post
+                    </button>
                 </footer>
             </form>
 
             <div className={styles.commentList}>
-                <Comment />
-                <Comment />
-                <Comment />
+                {comments.map(comment => {
+                    return (
+                        <Comment 
+                            key={comment} 
+                            content={comment} 
+                            onDeleteComment={deleteComment}
+                        />
+                    )
+                })}
             </div>
         </article>
     )

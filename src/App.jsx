@@ -6,6 +6,41 @@ import styles from './App.module.css';
 
 import './global.css'
 
+// author: { avatar_url: "", name: "", role: "" }
+// publishedAt: Date
+// content: string
+
+const posts = [
+  {
+    id: 1,
+    author: {
+      avatarUrl: 'https://github.com/evandrolugli.png',
+      name: 'Evandro Lugli',
+      role: 'Developer'
+    },
+    content: [
+      { type: 'paragraph', content: 'Hi everyone,' },
+      { type: 'paragraph', content: 'I have just to realized a new project in my profile. It is a NWL project in AI.' },
+      { type: 'link', content: 'evandrolugli/nwl-ai' },
+    ],
+    publishedAt: new Date('2023-10-05 20:00:00'),
+  },
+  {
+    id: 2,
+    author: {
+      avatarUrl: 'https://github.com/maykbrito.png',
+      name: 'Mayk Brito',
+      role: 'Educator'
+    },
+    content: [
+      { type: 'paragraph', content: 'Hi everyone,' },
+      { type: 'paragraph', content: 'I have just to realized a new project in my profile. It is a NWL project in AI.' },
+      { type: 'link', content: 'evandrolugli/nwl-ai' },
+    ],
+    publishedAt: new Date('2023-10-20 20:00:00'),
+  },
+];
+
 export function App() {
   return (
     <div>
@@ -14,14 +49,16 @@ export function App() {
         <Sidebar />
         
         <main>
-        <Post 
-          author="Evandro Lugli"
-          content="Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit consequuntur amet adipisci alias ducimus aut? Alias odio quisquam quasi beatae atque ipsam harum eos, error debitis sapiente, incidunt amet tenetur?"
-        />
-        <Post 
-          author="Felipe"
-          content="New post very very nice"
-        />
+          { posts.map(post => {
+            return (
+              <Post
+                key={post.id}
+                author={post.author}
+                content={post.content}
+                publishedAt={post.publishedAt}
+              />
+            )
+          })}
         </main>
       </div>
     </div>
