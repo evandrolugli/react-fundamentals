@@ -4,6 +4,6 @@
 - vite
 
 # Coding
-- install vite
+- npm install vite
 - run: npm run dev
 
