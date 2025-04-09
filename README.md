@@ -2,11 +2,11 @@
 A demo of React basics, showcasing the core fundamentals in action!
 
 # Technology
-- npm   : package manager
+- npm : package manager
 - react : core library for building the UI
-- vite  : modern build tool
+- vite : modern build tool
 
 # Coding
->> npm install vite
->> run: npm run dev
+> npm install vite
+> run: npm run dev
 
