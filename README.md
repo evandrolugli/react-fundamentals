@@ -36,5 +36,7 @@ const [count, setCount] = useState(0);
 ```
 
 ## Run the App
-npm install
-npm run dev
+```jsx
+> npm install
+> npm run dev
+```
