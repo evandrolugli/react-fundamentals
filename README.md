@@ -1,5 +1,3 @@
-# React Fundamentals
-
 ## Overview
 A demo of React basics, showcasing the core fundamentals in action!
 Created to understand and apply key concepts of modern React development. It includes the use of components, props, state management, conditional rendering, list rendering, event handling, and hooks.
@@ -35,7 +33,7 @@ const [count, setCount] = useState(0);
 {items.map(item => (
   <ItemCard key={item.id} {...item} />
 ))}
-
+```
 
 ## Run the App
 npm install
