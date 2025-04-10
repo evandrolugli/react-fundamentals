@@ -1,12 +1,42 @@
-# About
+# React Fundamentals
+
+## Overview
 A demo of React basics, showcasing the core fundamentals in action!
+Created to understand and apply key concepts of modern React development. It includes the use of components, props, state management, conditional rendering, list rendering, event handling, and hooks.
 
-# Technology
-- npm : package manager
-- react : core library for building the UI
-- vite : modern build tool
+## Tech Stack
+- **React** (with functional components)
+- **JavaScript (ES6+)**
+- **Vite** (for fast development server and build)
+- **CSS Modules** (for scoped styling)
 
-# Coding
-> npm install vite
-> run: npm run dev
+## Key Features
+- Component-based architecture
+- State management using `useState`
+- Conditional rendering with ternaries
+- List rendering using `.map()`
+- Props drilling
+- Reusable and composable UI components
+- Controlled input elements
+- Basic styling with CSS Modules
 
+## Key Code Concepts
+```jsx
+// Passing props
+<Greetings name="Evandro" />
+
+// Managing state
+const [count, setCount] = useState(0);
+
+// Conditional rendering
+{isLoggedIn ? <Dashboard /> : <Login />}
+
+// List rendering
+{items.map(item => (
+  <ItemCard key={item.id} {...item} />
+))}
+
+
+## Run the App
+npm install
+npm run dev
